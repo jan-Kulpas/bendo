@@ -1,6 +1,5 @@
-import 'package:bendo/providers/collection.dart';
-import 'package:bendo/providers/task.dart';
-import 'package:bendo/widgets/task_item.dart';
+import 'package:bendo/providers/collections.dart';
+import 'package:bendo/widgets/collection_item.dart';
 import "package:flutter/material.dart";
 import 'package:provider/provider.dart';
 
@@ -9,14 +8,15 @@ class MainScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final collections = context.read<Collections>();
+    collections.dummyInit();
     return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Center(
-          child: ChangeNotifierProvider.value(
-            value: Task("lmao xd"),
-            child: const TaskItem(),
-          ),
+      appBar: AppBar(), //! REMOVE
+      backgroundColor: Colors.grey.shade100,
+      body: Center(
+        child: ChangeNotifierProvider.value(
+          value: collections.items[0],
+          child: const CollectionItem(),
         ),
       ),
     );

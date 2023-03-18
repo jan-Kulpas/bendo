@@ -12,8 +12,10 @@ class TaskItem extends StatelessWidget {
     final task = context.watch<Task>();
 
     return Card(
-      child: Container(
-        color: task.state.color,
+      margin: const EdgeInsets.symmetric(vertical: 2),
+      elevation: 0,
+      color: task.state.color,
+      child: SizedBox(
         width: double.infinity,
         child: Row(children: [
           Flexible(

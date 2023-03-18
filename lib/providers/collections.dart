@@ -25,6 +25,11 @@ class Collections with ChangeNotifier {
     collection.addTask(Task("Twoj"));
     collection.addTask(Task("Stary"));
 
+    Collection collection2 = Collection("xdxdxd");
+    _items.add(collection2);
+    collection2.addTask(Task("Twoja"));
+    collection2.addTask(Task("Stara"));
+
     notifyListeners();
   }
 }
