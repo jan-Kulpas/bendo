@@ -6,13 +6,20 @@ import 'package:bendo/providers/task.dart';
 import 'package:bendo/models/task_state.dart';
 import 'package:bendo/helpers/extensions.dart';
 
+const uuid = Uuid();
+
 class Collection with ChangeNotifier {
-  final String id = const Uuid().v4();
+  final String id;
   final List<Task> _tasks = [];
   final Map<TaskState, String> states = TaskState.values.asNameMap().inverse;
   String title;
+  bool collapsed;
 
-  Collection(this.title);
+  Collection({
+    String? id,
+    required this.title,
+    this.collapsed = false,
+  }) : id = id ?? uuid.v4();
 
   List<Task> get tasks {
     return [..._tasks];
@@ -24,5 +31,10 @@ class Collection with ChangeNotifier {
 
   void deleteTask(String id) {
     _tasks.removeWhere((e) => e.id == id);
+  }
+
+  void toggleCollapse() {
+    collapsed = !collapsed;
+    notifyListeners();
   }
 }

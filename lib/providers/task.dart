@@ -5,12 +5,18 @@ import 'package:uuid/uuid.dart';
 
 import 'package:bendo/models/task_state.dart';
 
+const uuid = Uuid();
+
 class Task with ChangeNotifier {
-  final String id = const Uuid().v4();
-  TaskState state = TaskState.Neutral;
+  final String id;
+  TaskState state;
   String title;
 
-  Task(this.title);
+  Task({
+    String? id,
+    required this.title,
+    this.state = TaskState.Neutral,
+  }) : id = id ?? uuid.v4();
 
   /// Cycles TaskState to next in order or
   /// loops back to beginning if task is Done.

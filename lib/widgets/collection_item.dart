@@ -1,4 +1,5 @@
 import 'package:bendo/widgets/task_item.dart';
+import 'package:bendo/widgets/tile.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:bendo/providers/collection.dart';
@@ -13,17 +14,30 @@ class CollectionItem extends StatelessWidget {
       margin: const EdgeInsets.all(12),
       child: Column(
         children: [
-          Card(
-            elevation: 0,
-            margin: const EdgeInsets.symmetric(vertical: 2),
-            child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 12),
-              width: double.infinity,
-              child: Center(
-                child: Text(collection.title),
+          MultiTile(
+            flex: const [1, -1, 1],
+            children: [
+              GestureDetector(
+                onTap: collection.toggleCollapse,
+                child: const TileBody(),
               ),
-            ),
+              TileBody(
+                child: Text(
+                  "${collection.title}${collection.collapsed ? "▼" : "▲"}",
+                  textAlign: TextAlign.center,
+                ),
+              ),
+              GestureDetector(
+                onTap: collection.toggleCollapse,
+                child: const TileBody(),
+              ),
+            ],
           ),
+          // Tile(
+          //   child: Center(
+          //     child: Text(collection.title),
+          //   ),
+          // ),
           // Placeholder(), //chart bar
           ...collection.tasks.map(
             (task) => ChangeNotifierProvider.value(
@@ -32,15 +46,9 @@ class CollectionItem extends StatelessWidget {
             ),
           ),
           // Placeholder(), //add button
-          Card(
-            elevation: 0,
-            margin: const EdgeInsets.symmetric(vertical: 2),
-            child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 12),
-              width: double.infinity,
-              child: Text("${collection.tasks.length} ITEMS"),
-            ),
-          ), //item count
+          Tile(
+            child: Text("${collection.tasks.length} ITEMS"),
+          ),
         ],
       ),
     );

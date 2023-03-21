@@ -21,6 +21,15 @@ extension TaskStateExtension on TaskState {
     TaskState.Done: Colors.green
   };
 
+  // static const colorValues = {
+  //   TaskState.Neutral: "Neutral",
+  //   TaskState.Priority: "Priority",
+  //   TaskState.Working: "Working",
+  //   TaskState.Submitted: "Submitted",
+  //   TaskState.Approved: "Approved",
+  //   TaskState.Done: "Done",
+  // };
+
   Color get color {
     return colorMap[this] ?? Colors.grey.shade600;
   }

@@ -19,16 +19,18 @@ class Collections with ChangeNotifier {
     _items.remove(collection);
   }
 
-  void dummyInit() {
-    Collection collection = Collection("Test");
-    _items.add(collection);
-    collection.addTask(Task("Twoj"));
-    collection.addTask(Task("Stary"));
+  Future<void> dummyInit() async {
+    await Future.delayed(const Duration(milliseconds: 100), () {});
 
-    Collection collection2 = Collection("xdxdxd");
+    Collection collection = Collection(title: "Test");
+    _items.add(collection);
+    collection.addTask(Task(title: "Twoj"));
+    collection.addTask(Task(title: "Stary"));
+
+    Collection collection2 = Collection(title: "xdxdxd");
     _items.add(collection2);
-    collection2.addTask(Task("Twoja"));
-    collection2.addTask(Task("Stara"));
+    collection2.addTask(Task(title: "Twoja"));
+    collection2.addTask(Task(title: "Stara"));
 
     notifyListeners();
   }
