@@ -21,6 +21,7 @@ class TaskItem extends StatelessWidget {
           onTap: task.cycleState,
           child: TileBody(
             child: Text(
+              // ignore: todo
               // TODO update for collection state names and neutral ignore
               task.state.name,
               textAlign: TextAlign.right,

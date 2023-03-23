@@ -1,3 +1,4 @@
+import 'package:bendo/widgets/expansion_list.dart';
 import 'package:bendo/widgets/task_item.dart';
 import 'package:bendo/widgets/tile.dart';
 import 'package:flutter/material.dart';
@@ -23,7 +24,7 @@ class CollectionItem extends StatelessWidget {
               ),
               TileBody(
                 child: Text(
-                  "${collection.title}${collection.collapsed ? "▼" : "▲"}",
+                  "${collection.title}${collection.expanded ? "▼" : "▲"}",
                   textAlign: TextAlign.center,
                 ),
               ),
@@ -33,18 +34,20 @@ class CollectionItem extends StatelessWidget {
               ),
             ],
           ),
-          // Tile(
-          //   child: Center(
-          //     child: Text(collection.title),
-          //   ),
-          // ),
           // Placeholder(), //chart bar
-          ...collection.tasks.map(
-            (task) => ChangeNotifierProvider.value(
-              value: task,
-              child: const TaskItem(),
-            ),
+
+          ExpansionList(
+            expanded: collection.expanded,
+            children: collection.tasks
+                .map(
+                  (task) => ChangeNotifierProvider.value(
+                    value: task,
+                    child: const TaskItem(),
+                  ),
+                )
+                .toList(),
           ),
+
           // Placeholder(), //add button
           Tile(
             child: Text("${collection.tasks.length} ITEMS"),

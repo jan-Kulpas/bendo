@@ -13,12 +13,12 @@ class Collection with ChangeNotifier {
   final List<Task> _tasks = [];
   final Map<TaskState, String> states = TaskState.values.asNameMap().inverse;
   String title;
-  bool collapsed;
+  bool expanded;
 
   Collection({
     String? id,
     required this.title,
-    this.collapsed = false,
+    this.expanded = true,
   }) : id = id ?? uuid.v4();
 
   List<Task> get tasks {
@@ -34,7 +34,7 @@ class Collection with ChangeNotifier {
   }
 
   void toggleCollapse() {
-    collapsed = !collapsed;
+    expanded = !expanded;
     notifyListeners();
   }
 }
