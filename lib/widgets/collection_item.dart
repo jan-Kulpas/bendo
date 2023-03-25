@@ -1,4 +1,5 @@
 import 'package:bendo/widgets/expansion_list.dart';
+import 'package:bendo/widgets/rename_item_widget.dart';
 import 'package:bendo/widgets/task_item.dart';
 import 'package:bendo/widgets/tile.dart';
 import 'package:flutter/material.dart';
@@ -19,18 +20,24 @@ class CollectionItem extends StatelessWidget {
             flex: const [1, -1, 1],
             children: [
               GestureDetector(
-                onTap: collection.toggleCollapse,
+                onTap: collection.toggleExpand,
                 child: const TileBody(),
               ),
               TileBody(
-                child: Text(
-                  "${collection.title}${collection.expanded ? "▼" : "▲"}",
-                  textAlign: TextAlign.center,
+                child: IntrinsicWidth(
+                  child: RenameItemWidget(
+                    title: collection.title,
+                    hintText: "Delete?",
+                    alignment: TextAlign.center,
+                    onSave: (value) => collection.rename(value),
+                  ),
                 ),
               ),
               GestureDetector(
-                onTap: collection.toggleCollapse,
-                child: const TileBody(),
+                onTap: collection.toggleExpand,
+                child: TileBody(
+                  child: Text(collection.expanded ? "▼" : "▲"),
+                ),
               ),
             ],
           ),
@@ -42,7 +49,7 @@ class CollectionItem extends StatelessWidget {
                 .map(
                   (task) => ChangeNotifierProvider.value(
                     value: task,
-                    child: const TaskItem(),
+                    child: TaskItem(key: UniqueKey()),
                   ),
                 )
                 .toList(),

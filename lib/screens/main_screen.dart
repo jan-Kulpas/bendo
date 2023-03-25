@@ -21,18 +21,21 @@ class _MainScreenState extends State<MainScreen> {
   @override
   Widget build(BuildContext context) {
     final collections = context.watch<Collections>();
-    return Scaffold(
-      appBar: AppBar(), //! REMOVE
-      backgroundColor: Colors.grey.shade100,
-      body: Column(
-        children: [
-          ...collections.items.map(
-            (collection) => ChangeNotifierProvider.value(
-              value: collection,
-              child: const CollectionItem(),
+    return GestureDetector(
+      onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
+      child: Scaffold(
+        appBar: AppBar(), //! REMOVE
+        backgroundColor: Colors.grey.shade100,
+        body: Column(
+          children: [
+            ...collections.items.map(
+              (collection) => ChangeNotifierProvider.value(
+                value: collection,
+                child: CollectionItem(key: UniqueKey()),
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

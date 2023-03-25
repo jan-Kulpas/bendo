@@ -10,25 +10,31 @@ class Collections with ChangeNotifier {
   }
 
   void addCollection(Collection collection) {
+    collection.parent = this;
     _items.add(collection);
+    notifyListeners();
   }
 
-  void deleteCollection(String id) {
-    Collection collection = _items.firstWhere((e) => e.id == id);
-    // ! Delete all tasks here
+  void deleteCollection(Collection collection) {
+    print("xd?");
+    for (Task task in collection.tasks) {
+      collection.deleteTask(task);
+    }
+    collection.parent = null;
     _items.remove(collection);
+    notifyListeners();
   }
 
   Future<void> dummyInit() async {
     await Future.delayed(const Duration(milliseconds: 100), () {});
 
     Collection collection = Collection(title: "Test");
-    _items.add(collection);
+    addCollection(collection);
     collection.addTask(Task(title: "Twoj"));
     collection.addTask(Task(title: "Stary"));
 
     Collection collection2 = Collection(title: "xdxdxd");
-    _items.add(collection2);
+    addCollection(collection2);
     collection2.addTask(Task(title: "Twoja"));
     collection2.addTask(Task(title: "Stara"));
 

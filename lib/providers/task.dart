@@ -1,5 +1,6 @@
 //import 'package:flutter/material.dart';
 //import 'package:provider/provider.dart';
+import 'package:bendo/providers/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:uuid/uuid.dart';
 
@@ -9,6 +10,7 @@ const uuid = Uuid();
 
 class Task with ChangeNotifier {
   final String id;
+  Collection? parent;
   TaskState state;
   String title;
 
@@ -16,6 +18,7 @@ class Task with ChangeNotifier {
     String? id,
     required this.title,
     this.state = TaskState.Neutral,
+    this.parent,
   }) : id = id ?? uuid.v4();
 
   /// Cycles TaskState to next in order or
@@ -29,6 +32,14 @@ class Task with ChangeNotifier {
       state = TaskState.Neutral;
     }
 
+    notifyListeners();
+  }
+
+  /// Change the Task title.
+  /// If new title is an empty string the Task will be deleted.
+  void rename(String newTitle) {
+    title = newTitle;
+    if (newTitle.isEmpty) parent?.deleteTask(this);
     notifyListeners();
   }
 }

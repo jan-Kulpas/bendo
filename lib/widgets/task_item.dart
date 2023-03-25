@@ -1,5 +1,6 @@
 import 'package:bendo/models/task_state.dart';
 import 'package:bendo/providers/task.dart';
+import 'package:bendo/widgets/rename_item_widget.dart';
 import 'package:bendo/widgets/tile.dart';
 import 'package:provider/provider.dart';
 
@@ -16,7 +17,13 @@ class TaskItem extends StatelessWidget {
       color: task.state.color,
       flex: const [2, 1],
       children: [
-        TileBody(child: Text(task.title)),
+        TileBody(
+          child: RenameItemWidget(
+            title: task.title,
+            hintText: "Delete?",
+            onSave: (value) => task.rename(value),
+          ),
+        ),
         GestureDetector(
           onTap: task.cycleState,
           child: TileBody(

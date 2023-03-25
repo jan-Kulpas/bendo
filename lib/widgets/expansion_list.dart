@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 
 const Duration _kExpand = Duration(milliseconds: 200);
 
+/// Animated Widget that is a Column that expands or
+/// collapses based on the [expanded] field.
 class ExpansionList extends StatefulWidget {
   final List<Widget> children;
   final bool expanded;
